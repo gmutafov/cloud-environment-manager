@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
@@ -14,8 +14,21 @@ class UserSignupView(CreateView):
 class UserLoginView(LoginView):
     template_name = 'accounts/login.html'
 
+    def get_success_url(self):
+        return reverse_lazy('dashboard')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('dashboard')
+        return super().dispatch(request, *args, **kwargs)
+
+
 class UserLogoutView(LogoutView):
     next_page = reverse_lazy('login')
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/dashboard.html'
