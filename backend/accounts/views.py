@@ -13,14 +13,7 @@ class UserSignupView(CreateView):
 
 class UserLoginView(LoginView):
     template_name = 'accounts/login.html'
-
-    def get_success_url(self):
-        return reverse_lazy('dashboard')
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect('dashboard')
-        return super().dispatch(request, *args, **kwargs)
+    redirect_authenticated_user = True
 
 
 class UserLogoutView(LogoutView):
