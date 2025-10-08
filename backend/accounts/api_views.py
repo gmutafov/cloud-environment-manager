@@ -11,6 +11,7 @@ class SignupAPI(generics.CreateAPIView):
     serializer_class = UserCreateSerializer
     permission_classes = [permissions.AllowAny]
 
+
 class UserDetailAPI(generics.RetrieveAPIView):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -18,10 +19,13 @@ class UserDetailAPI(generics.RetrieveAPIView):
     def get_object(self):
         return self.request.user
 
-# optional: custom token view to return user data and token
+
 class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
-        resp = super().post(request, *args, **kwargs)
-        token = Token.objects.get(key=resp.data['token'])
+        response = super().post(request, *args, **kwargs)
+        token = Token.objects.get(key=response.data['token'])
         user = token.user
-        return Response({'token': token.key, 'user': UserSerializer(user).data})
+        return Response({
+            'token': token.key,
+            'user': UserSerializer(user).data
+        })
