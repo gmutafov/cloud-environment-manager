@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}🗑️ Delete Environment{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center">
+  <div class="card shadow-lg p-4 mx-auto" style="max-width: 450px;">
+    <h3 class="fw-bold mb-3">⚠️ Confirm Delete</h3>
+    <p>Are you sure you want to delete <strong>{{ object.name }}</strong>?</p>
+
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger rounded-pill px-4">🗑️ Yes, Delete</button>
+      <a href="{% url 'environment_list' %}" class="btn btn-secondary rounded-pill px-4">❌ Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}
