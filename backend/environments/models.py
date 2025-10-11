@@ -21,3 +21,13 @@ class Environment(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.owner.username})"
+
+
+class ActivityLog(models.Model):
+    environment = models.ForeignKey(Environment, on_delete=models.CASCADE, related_name='activities')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+    action = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.environment.name} - {self.action} by {self.user or 'System'}"

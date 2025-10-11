@@ -24,7 +24,8 @@
                 </ul>
 
                 <div class="mt-auto d-flex gap-2">
-                    <!--                    <a class="btn btn-outline-primary btn-sm rounded-pill">👀 View</a>-->
+                    <a href="{% url 'environment_detail' env.pk %}" class="btn btn-outline-primary btn-sm rounded-pill">👀
+                        View</a>
                     <a href="{% url 'environment_edit' env.pk %}" class="btn btn-outline-success btn-sm rounded-pill">✏️
                         Edit</a>
                     <a href="{% url 'environment_delete' env.pk %}" class="btn btn-outline-danger btn-sm rounded-pill">🗑️
